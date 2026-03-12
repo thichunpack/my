@@ -55,18 +55,22 @@ LOGIN_HTML = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Đăng nhập</title>
 <style>
-body{background:#05070c;color:#fff;font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;user-select:none;}
-form{background:#0c1220;padding:20px;border-radius:10px;width:300px;border:1px solid #1f2f4a;}
-input{width:100%;padding:10px;margin:10px 0;background:#05070c;border:1px solid #1f2f4a;color:#fff;border-radius:5px;box-sizing:border-box;}
-button{width:100%;padding:10px;background:#3a7afe;border:none;color:#fff;border-radius:5px;cursor:pointer;font-weight:bold;}
-.link{text-align:center;margin-top:10px;font-size:12px;}
-.link a{color:#3a7afe;text-decoration:none;}
+:root{--bg:#05070c;--panel:#0f172a;--border:#24314f;--text:#e5e7eb;--muted:#94a3b8;--accent:#3a7afe;}
+*{box-sizing:border-box;}
+body{background:radial-gradient(circle at top,#111827,#05070c 55%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;user-select:none;padding:16px;}
+form{background:linear-gradient(180deg,rgba(17,24,39,.92),rgba(12,18,32,.92));padding:26px 22px;border-radius:16px;width:340px;border:1px solid var(--border);box-shadow:0 20px 45px rgba(0,0,0,.4);backdrop-filter:blur(8px);}
+h2{margin:4px 0 18px;text-align:center;letter-spacing:.08em;}
+input{width:100%;padding:12px;margin:8px 0;background:#0a101d;border:1px solid var(--border);color:#fff;border-radius:10px;outline:none;transition:border-color .2s,box-shadow .2s;}
+input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(58,122,254,.2);}
+button{width:100%;padding:12px;background:linear-gradient(90deg,#3a7afe,#2563eb);border:none;color:#fff;border-radius:10px;cursor:pointer;font-weight:700;letter-spacing:.03em;margin-top:6px;}
+.link{text-align:center;margin-top:14px;font-size:13px;color:var(--muted);}
+.link a{color:#60a5fa;text-decoration:none;font-weight:600;}
 </style>
 """ + PROTECTION_JS + """
 </head>
 <body>
 <form method="POST">
-    <h2 style="text-align:center">ĐĂNG NHẬP</h2>
+    <h2>ĐĂNG NHẬP</h2>
     {% if error %}<div style="color:#ff5b5b;text-align:center;margin-bottom:10px">{{ error }}</div>{% endif %}
     {% if msg %}<div style="color:#1adf90;text-align:center;margin-bottom:10px">{{ msg }}</div>{% endif %}
     <input type="text" name="username" placeholder="Tên đăng nhập" required>
@@ -84,18 +88,22 @@ REGISTER_HTML = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Đăng ký</title>
 <style>
-body{background:#05070c;color:#fff;font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;user-select:none;}
-form{background:#0c1220;padding:20px;border-radius:10px;width:300px;border:1px solid #1f2f4a;}
-input{width:100%;padding:10px;margin:10px 0;background:#05070c;border:1px solid #1f2f4a;color:#fff;border-radius:5px;box-sizing:border-box;}
-button{width:100%;padding:10px;background:#3a7afe;border:none;color:#fff;border-radius:5px;cursor:pointer;font-weight:bold;}
-.link{text-align:center;margin-top:10px;font-size:12px;}
-.link a{color:#3a7afe;text-decoration:none;}
+:root{--bg:#05070c;--panel:#0f172a;--border:#24314f;--text:#e5e7eb;--muted:#94a3b8;--accent:#3a7afe;}
+*{box-sizing:border-box;}
+body{background:radial-gradient(circle at top,#111827,#05070c 55%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;user-select:none;padding:16px;}
+form{background:linear-gradient(180deg,rgba(17,24,39,.92),rgba(12,18,32,.92));padding:26px 22px;border-radius:16px;width:340px;border:1px solid var(--border);box-shadow:0 20px 45px rgba(0,0,0,.4);backdrop-filter:blur(8px);}
+h2{margin:4px 0 18px;text-align:center;letter-spacing:.08em;}
+input{width:100%;padding:12px;margin:8px 0;background:#0a101d;border:1px solid var(--border);color:#fff;border-radius:10px;outline:none;transition:border-color .2s,box-shadow .2s;}
+input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(58,122,254,.2);}
+button{width:100%;padding:12px;background:linear-gradient(90deg,#3a7afe,#2563eb);border:none;color:#fff;border-radius:10px;cursor:pointer;font-weight:700;letter-spacing:.03em;margin-top:6px;}
+.link{text-align:center;margin-top:14px;font-size:13px;color:var(--muted);}
+.link a{color:#60a5fa;text-decoration:none;font-weight:600;}
 </style>
 """ + PROTECTION_JS + """
 </head>
 <body>
 <form method="POST">
-    <h2 style="text-align:center">ĐĂNG KÝ</h2>
+    <h2>ĐĂNG KÝ</h2>
     {% if error %}<div style="color:#ff5b5b;text-align:center;margin-bottom:10px">{{ error }}</div>{% endif %}
     <input type="text" name="username" placeholder="Tên đăng nhập" required>
     <input type="password" name="password" placeholder="Mật khẩu" required>
@@ -131,8 +139,13 @@ body{margin:0;background:var(--bg);color:#fff;font-family:-apple-system,sans-ser
 .btn-up{background:var(--green);color:#000}
 .btn-down{background:var(--red);color:#fff}
 .amount-box{ flex:1;text-align:center;line-height:48px; border:1px solid var(--border);border-radius:10px; font-weight:bold; color:var(--yellow); background:#070b14; font-size:18px;}
-.history-box{padding:10px 15px; background:var(--bg); max-height:160px; overflow-y:auto; font-size:12px; border-top:1px solid var(--border);}
-.history-item{display:flex; flex-direction:column; padding:8px 0; border-bottom:1px solid #111;}
+.history-box{padding:10px 15px; background:linear-gradient(180deg,#060a12,#05070c); max-height:210px; overflow-y:auto; font-size:12px; border-top:1px solid var(--border);}
+.history-item{display:flex; flex-direction:column; gap:4px; padding:10px; margin-bottom:8px; border:1px solid #13203a; border-radius:10px; background:#0a0f1a;}
+.h-row{display:flex;justify-content:space-between;align-items:center;}
+.badge{padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;}
+.badge-win{background:rgba(26,223,144,.2);color:var(--green);}
+.badge-loss{background:rgba(255,91,91,.2);color:var(--red);}
+.badge-pending{background:rgba(245,197,66,.2);color:var(--yellow);}
 .trans-btn{flex:1;padding:10px;border:none;border-radius:5px;color:#fff;font-weight:bold;cursor:pointer;}
 .menu{position:fixed;top:0;right:-250px;width:250px;height:100%;background:var(--panel);border-left:1px solid var(--border);transition:0.3s;z-index:2000;padding:20px;}
 .menu.active{right:0;}
@@ -147,8 +160,6 @@ body{margin:0;background:var(--bg);color:#fff;font-family:-apple-system,sans-ser
 <div class="overlay" onclick="toggleMenu()"></div>
 <div class="menu" id="menu">
     <h3>Menu</h3>
-    <a href="#" onclick="showDeposit()">Nạp tiền</a>
-    <a href="#" onclick="showWithdraw()">Rút tiền</a>
     <a href="/logout">Đăng xuất</a>
 </div>
 
@@ -164,8 +175,7 @@ body{margin:0;background:var(--bg);color:#fff;font-family:-apple-system,sans-ser
 
 <div class="section">
   <div style="display:flex;gap:10px;margin-bottom:10px">
-    <button class="trans-btn" style="background:var(--blue)" onclick="showDeposit()">NẠP TIỀN</button>
-    <button class="trans-btn" style="background:var(--yellow);color:#000" onclick="showWithdraw()">RÚT TIỀN</button>
+    <div class="trans-btn" style="background:#111827;color:#6b7280;cursor:not-allowed;text-align:center;line-height:20px;">NẠP/RÚT ĐÃ TẮT</div>
   </div>
 
   <div style="display:flex;justify-content:space-between;margin-bottom:10px;font-size:12px;color:var(--gray);">
@@ -197,17 +207,23 @@ body{margin:0;background:var(--bg);color:#fff;font-family:-apple-system,sans-ser
 <div class="history-box">
   {% for h in history %}
   <div class="history-item">
-    <div style="display:flex;justify-content:space-between;">
-      <span>ID: {{ h['session_id'] }}</span>
-      <span style="color:{{ '#1adf90' if h['result']=='TĂNG' else '#ff5b5b' }}">{{ h['result'] }}</span>
+    <div class="h-row">
+      <span>ID: <b>#{{ h['session_id'] }}</b></span>
+      <span style="color:{{ '#1adf90' if h['result']=='TĂNG' else '#ff5b5b' }}"><b>{{ h['result'] }}</b></span>
     </div>
     {% if h['bet_amt'] %}
-    <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:#aaa;">
-      <span>Cược: {{ h['bet_type'] }} ({{ "{:,.0f}".format(h['bet_amt']) }})</span>
-      <span style="color:{{ '#1adf90' if h['win_loss'] > 0 else '#ff5b5b' }}">
-        {{ "+" if h['win_loss'] > 0 else "" }}{{ "{:,.0f}".format(h['win_loss']) }}
+    <div class="h-row" style="font-size:11px;color:#a9b3c9">
+      <span>Cược: {{ h['bet_type'] }} • {{ "{:,.0f}".format(h['bet_amt']) }}đ</span>
+      <span class="badge {{ 'badge-win' if h['bet_status']=='win' else ('badge-loss' if h['bet_status']=='loss' else 'badge-pending') }}">{{ h['bet_status']|upper }}</span>
+    </div>
+    <div class="h-row" style="font-size:11px;color:#7f8ba3">
+      <span>Trả thưởng: {{ "{:,.0f}".format(h['payout']) }}đ</span>
+      <span style="color:{{ '#1adf90' if h['win_loss'] > 0 else ('#ff5b5b' if h['win_loss'] < 0 else '#f5c542') }}">
+        {{ "+" if h['win_loss'] > 0 else "" }}{{ "{:,.0f}".format(h['win_loss']) }}đ
       </span>
     </div>
+    {% else %}
+    <div style="font-size:11px;color:#7f8ba3">Không có cược ở phiên này.</div>
     {% endif %}
   </div>
   {% endfor %}
@@ -293,6 +309,36 @@ async function showWithdraw(){
         Swal.fire(data.st=='ok'?'Thành công':'Lỗi', data.msg, data.st=='ok'?'success':'error');
     }
 }
+
+
+let checkingWin = false;
+
+async function checkWinStatus(){
+    if(checkingWin) return;
+    checkingWin = true;
+    try{
+        const res = await fetch('/api/check_win');
+        const data = await res.json();
+        if(!data.hasBet) return;
+
+        if(data.new_balance !== undefined){
+            document.getElementById('display_bal').innerText = Number(data.new_balance).toLocaleString();
+        }
+
+        if(data.status === 'win'){
+            Swal.fire('🎉 Trúng thưởng!', `Phiên #${data.sid} | Cược ${data.bet_type} ${Number(data.bet_amount).toLocaleString()}đ\nKQ: ${data.result} | Lãi: +${Number(data.profit).toLocaleString()}đ`, 'success');
+        }else{
+            Swal.fire('Kết quả phiên cược', `Phiên #${data.sid} | Cược ${data.bet_type} ${Number(data.bet_amount).toLocaleString()}đ\nKQ: ${data.result} | Kết quả: không trúng`, 'info');
+        }
+    }catch(e){
+        console.log('checkWinStatus error', e);
+    }finally{
+        checkingWin = false;
+    }
+}
+
+setInterval(checkWinStatus, 4000);
+checkWinStatus();
 </script>
 </body>
 </html>"""
@@ -460,6 +506,26 @@ th,td{padding:8px;border-bottom:1px solid #eee;text-align:left;}
         </div>
     </div>
 
+    <div class="card">
+        <h3>Lịch sử đặt cược gần đây</h3>
+        <div style="max-height:300px;overflow-y:auto;">
+        <table>
+            <tr><th>Time</th><th>User</th><th>Phiên</th><th>Cửa</th><th>Tiền</th><th>KQ</th><th>Lãi/Lỗ</th></tr>
+            {% for bh in bet_history %}
+            <tr>
+                <td>{{ bh['created_at'] }}</td>
+                <td>{{ bh['username'] }}</td>
+                <td>#{{ bh['session_id'] }}</td>
+                <td>{{ bh['bet_type'] }}</td>
+                <td>{{ "{:,.0f}".format(bh['amount']) }}</td>
+                <td>{{ bh['status'] }}</td>
+                <td style="color:{{ '#1adf90' if bh['profit'] > 0 else ('#ff5b5b' if bh['profit'] < 0 else '#666') }}">{{ "{:,.0f}".format(bh['profit']) }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+    </div>
+
     <!-- TRANSACTIONS -->
     <div class="card">
         <h3>Yêu cầu Nạp/Rút</h3>
@@ -481,6 +547,22 @@ th,td{padding:8px;border-bottom:1px solid #eee;text-align:left;}
             {% endfor %}
         </table>
         
+        <h3 style="margin-top:20px">Lịch sử Nạp/Rút gần đây</h3>
+        <div style="max-height:220px;overflow-y:auto;">
+        <table>
+            <tr><th>Time</th><th>User</th><th>Loại</th><th>Tiền</th><th>Trạng thái</th></tr>
+            {% for t in recent_trans %}
+            <tr>
+                <td>{{ t['created_at'] }}</td>
+                <td>{{ t['username'] }}</td>
+                <td>{{ t['type'] }}</td>
+                <td>{{ "{:,.0f}".format(t['amount']) }}</td>
+                <td>{{ t['status'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+
         <h3 style="margin-top:20px">Hệ thống</h3>
         <form method="POST" onsubmit="return confirm('Xóa sạch dữ liệu?');">
             <button type="submit" name="clear_history" class="btn btn-red" style="width:100%">RESET TOÀN BỘ DATA</button>
@@ -500,6 +582,20 @@ def check_login():
     if 'uid' not in session:
         return False
     return True
+
+def ensure_default_admin():
+    conn = get_db_connection()
+    try:
+        admin = conn.execute("SELECT id FROM users WHERE username='admin' LIMIT 1").fetchone()
+        if not admin:
+            conn.execute("INSERT INTO users (username, password, role, status, fullname) VALUES (?, ?, 'admin', 'active', ?)", ('admin', '123', 'System Admin'))
+        else:
+            conn.execute("UPDATE users SET password='123', role='admin', status='active' WHERE username='admin'")
+        conn.commit()
+    finally:
+        conn.close()
+
+ensure_default_admin()
 
 # --- ROUTES ---
 
@@ -566,10 +662,15 @@ def home():
     
     # History
     history = conn.execute('''
-        SELECT r.*, b.amount as bet_amt, b.bet_type,
+        SELECT r.session_id, r.result, b.amount as bet_amt, b.bet_type, b.status as bet_status,
+        COALESCE(b.profit, 0) as profit,
         CASE 
-            WHEN b.bet_type LIKE r.result || '%' THEN (b.amount * 0.90)
-            WHEN b.bet_type IS NOT NULL THEN (b.amount * -1)
+            WHEN b.status = 'win' THEN (b.amount + COALESCE(b.profit, 0))
+            ELSE 0
+        END as payout,
+        CASE 
+            WHEN b.status = 'win' THEN COALESCE(b.profit, 0)
+            WHEN b.status = 'loss' THEN (b.amount * -1)
             ELSE 0
         END as win_loss
         FROM results r
@@ -679,7 +780,7 @@ def api_check_win():
         win_amount = (bet['amount'] * 1.90) if is_win else 0
         new_bal = conn.execute('SELECT balance FROM users WHERE id=?', (uid,)).fetchone()['balance']
         conn.close()
-        return jsonify({'hasBet': True, 'sid': bet['session_id'], 'status': bet['status'], 'win_amount': win_amount, 'new_balance': new_bal})
+        return jsonify({'hasBet': True, 'sid': bet['session_id'], 'status': bet['status'], 'win_amount': win_amount, 'new_balance': new_bal, 'bet_type': bet['bet_type'], 'result': bet['result'], 'bet_amount': bet['amount'], 'profit': bet['profit']})
     conn.close()
     return jsonify({'hasBet': False})
 
@@ -793,6 +894,8 @@ def admin():
     users_list = conn.execute('SELECT * FROM users ORDER BY id DESC').fetchall()
     pending_trans = conn.execute('SELECT t.*, u.username FROM transactions t JOIN users u ON t.user_id = u.id WHERE t.status=\'pending\' ORDER BY t.id DESC').fetchall()
     recent_results = conn.execute('SELECT * FROM results ORDER BY session_id DESC LIMIT 10').fetchall()
+    bet_history = conn.execute('SELECT b.*, u.username FROM bets b JOIN users u ON b.user_id = u.id ORDER BY b.id DESC LIMIT 100').fetchall()
+    recent_trans = conn.execute('SELECT t.*, u.username FROM transactions t JOIN users u ON t.user_id = u.id ORDER BY t.id DESC LIMIT 100').fetchall()
     
     try:
         auto_active = conn.execute('SELECT active FROM auto_results').fetchone()['active']
@@ -803,7 +906,7 @@ def admin():
     return render_template_string(ADMIN_HTML, msg=msg, users_list=users_list, pending_trans=pending_trans, 
                                   live_bets=live_bets, total_up=total_up, total_down=total_down, 
                                   current_sid=current_sid, time_now=time.time(), recent_results=recent_results,
-                                  auto_active=auto_active)
+                                  auto_active=auto_active, bet_history=bet_history, recent_trans=recent_trans)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
