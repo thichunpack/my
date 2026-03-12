@@ -636,9 +636,10 @@ def ensure_default_admin():
     try:
         admin = conn.execute("SELECT id FROM users WHERE username='admin' LIMIT 1").fetchone()
         if not admin:
-            conn.execute("INSERT INTO users (username, password, role, status, fullname) VALUES (?, ?, 'admin', 'active', ?)", ('admin', '123', 'System Admin'))
-        else:
-            conn.execute("UPDATE users SET password='123', role='admin', status='active' WHERE username='admin'")
+            conn.execute(
+                "INSERT INTO users (username, password, role, status, fullname) VALUES (?, ?, 'admin', 'active', ?)",
+                ('admin', generate_password_hash('123'), 'System Admin')
+            )
         conn.commit()
     finally:
         conn.close()
@@ -910,7 +911,7 @@ def admin():
             conn.execute('UPDATE users SET balance=?, fullname=?, bank_name=?, bank_number=?, bank_user=?, role=? WHERE id=?',
                          (bal, fullname, bank_name, bank_number, bank_user, role, tuid))
             if user_pass:
-                conn.execute('UPDATE users SET password=? WHERE id=?', (user_pass, tuid))
+                conn.execute('UPDATE users SET password=? WHERE id=?', (generate_password_hash(user_pass), tuid))
             msg = f"Đã cập nhật user ID {tuid}"
             
 
