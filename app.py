@@ -55,18 +55,22 @@ LOGIN_HTML = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Đăng nhập</title>
 <style>
-body{background:#05070c;color:#fff;font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;user-select:none;}
-form{background:#0c1220;padding:20px;border-radius:10px;width:300px;border:1px solid #1f2f4a;}
-input{width:100%;padding:10px;margin:10px 0;background:#05070c;border:1px solid #1f2f4a;color:#fff;border-radius:5px;box-sizing:border-box;}
-button{width:100%;padding:10px;background:#3a7afe;border:none;color:#fff;border-radius:5px;cursor:pointer;font-weight:bold;}
-.link{text-align:center;margin-top:10px;font-size:12px;}
-.link a{color:#3a7afe;text-decoration:none;}
+:root{--bg:#05070c;--panel:#0f172a;--border:#24314f;--text:#e5e7eb;--muted:#94a3b8;--accent:#3a7afe;}
+*{box-sizing:border-box;}
+body{background:radial-gradient(circle at top,#111827,#05070c 55%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;user-select:none;padding:16px;}
+form{background:linear-gradient(180deg,rgba(17,24,39,.92),rgba(12,18,32,.92));padding:26px 22px;border-radius:16px;width:340px;border:1px solid var(--border);box-shadow:0 20px 45px rgba(0,0,0,.4);backdrop-filter:blur(8px);}
+h2{margin:4px 0 18px;text-align:center;letter-spacing:.08em;}
+input{width:100%;padding:12px;margin:8px 0;background:#0a101d;border:1px solid var(--border);color:#fff;border-radius:10px;outline:none;transition:border-color .2s,box-shadow .2s;}
+input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(58,122,254,.2);}
+button{width:100%;padding:12px;background:linear-gradient(90deg,#3a7afe,#2563eb);border:none;color:#fff;border-radius:10px;cursor:pointer;font-weight:700;letter-spacing:.03em;margin-top:6px;}
+.link{text-align:center;margin-top:14px;font-size:13px;color:var(--muted);}
+.link a{color:#60a5fa;text-decoration:none;font-weight:600;}
 </style>
 """ + PROTECTION_JS + """
 </head>
 <body>
 <form method="POST">
-    <h2 style="text-align:center">ĐĂNG NHẬP</h2>
+    <h2>ĐĂNG NHẬP</h2>
     {% if error %}<div style="color:#ff5b5b;text-align:center;margin-bottom:10px">{{ error }}</div>{% endif %}
     {% if msg %}<div style="color:#1adf90;text-align:center;margin-bottom:10px">{{ msg }}</div>{% endif %}
     <input type="text" name="username" placeholder="Tên đăng nhập" required>
@@ -84,18 +88,22 @@ REGISTER_HTML = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Đăng ký</title>
 <style>
-body{background:#05070c;color:#fff;font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;user-select:none;}
-form{background:#0c1220;padding:20px;border-radius:10px;width:300px;border:1px solid #1f2f4a;}
-input{width:100%;padding:10px;margin:10px 0;background:#05070c;border:1px solid #1f2f4a;color:#fff;border-radius:5px;box-sizing:border-box;}
-button{width:100%;padding:10px;background:#3a7afe;border:none;color:#fff;border-radius:5px;cursor:pointer;font-weight:bold;}
-.link{text-align:center;margin-top:10px;font-size:12px;}
-.link a{color:#3a7afe;text-decoration:none;}
+:root{--bg:#05070c;--panel:#0f172a;--border:#24314f;--text:#e5e7eb;--muted:#94a3b8;--accent:#3a7afe;}
+*{box-sizing:border-box;}
+body{background:radial-gradient(circle at top,#111827,#05070c 55%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;user-select:none;padding:16px;}
+form{background:linear-gradient(180deg,rgba(17,24,39,.92),rgba(12,18,32,.92));padding:26px 22px;border-radius:16px;width:340px;border:1px solid var(--border);box-shadow:0 20px 45px rgba(0,0,0,.4);backdrop-filter:blur(8px);}
+h2{margin:4px 0 18px;text-align:center;letter-spacing:.08em;}
+input{width:100%;padding:12px;margin:8px 0;background:#0a101d;border:1px solid var(--border);color:#fff;border-radius:10px;outline:none;transition:border-color .2s,box-shadow .2s;}
+input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(58,122,254,.2);}
+button{width:100%;padding:12px;background:linear-gradient(90deg,#3a7afe,#2563eb);border:none;color:#fff;border-radius:10px;cursor:pointer;font-weight:700;letter-spacing:.03em;margin-top:6px;}
+.link{text-align:center;margin-top:14px;font-size:13px;color:var(--muted);}
+.link a{color:#60a5fa;text-decoration:none;font-weight:600;}
 </style>
 """ + PROTECTION_JS + """
 </head>
 <body>
 <form method="POST">
-    <h2 style="text-align:center">ĐĂNG KÝ</h2>
+    <h2>ĐĂNG KÝ</h2>
     {% if error %}<div style="color:#ff5b5b;text-align:center;margin-bottom:10px">{{ error }}</div>{% endif %}
     <input type="text" name="username" placeholder="Tên đăng nhập" required>
     <input type="password" name="password" placeholder="Mật khẩu" required>
@@ -293,6 +301,30 @@ async function showWithdraw(){
         Swal.fire(data.st=='ok'?'Thành công':'Lỗi', data.msg, data.st=='ok'?'success':'error');
     }
 }
+
+
+async function checkWinStatus(){
+    try{
+        const res = await fetch('/api/check_win');
+        const data = await res.json();
+        if(!data.hasBet) return;
+
+        if(data.new_balance !== undefined){
+            document.getElementById('display_bal').innerText = Number(data.new_balance).toLocaleString();
+        }
+
+        if(data.status === 'win'){
+            Swal.fire('🎉 Trúng thưởng!', `Phiên #${data.sid} thắng ${Number(data.win_amount).toLocaleString()}đ`, 'success');
+        }else{
+            Swal.fire('Kết quả', `Phiên #${data.sid} chưa thắng, chúc bạn may mắn phiên sau!`, 'info');
+        }
+    }catch(e){
+        console.log('checkWinStatus error', e);
+    }
+}
+
+setInterval(checkWinStatus, 5000);
+checkWinStatus();
 </script>
 </body>
 </html>"""
