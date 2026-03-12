@@ -1,52 +1,23 @@
-# Python Backend
+# Backend PHP
 
-This is the Python port of the trading system backend, using Flask and SQLite.
+This directory contains the PHP backend files for the trading system.
 
-## Prerequisites
+## Changes Made
 
-- Python 3.8+
-- pip
+1.  **Admin Panel (`admin.php`)**:
+    *   **Removed Random Auto-Generation**: The "AUTO ON" feature no longer generates random results.
+    *   **Sorted IDs**: Results are sorted by `session_id` ASC.
+
+2.  **Home & API (`home.php`, `api.php`, `history.php`, `api_result.php`)**:
+    *   **Sync IDs & Security**: Modified ALL queries to only fetch results for **completed sessions** (`session_id < current_sid`).
+    *   **Prevent Leaks**: Future results set by Admin are now strictly hidden from users until the session ends. This applies to the Home chart, History page, and API endpoints.
+    *   **Consistent Display**: The history bar now strictly follows the timeline and matches the finalized results in the database.
+
+3.  **Logic Flow**:
+    *   **Admin Priority**: Admin-set results are respected 100%.
+    *   **System Logic**: If no admin result, system uses "House Wins" logic.
 
 ## Setup
 
-1.  **Install Dependencies**:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-2.  **Initialize Database**:
-    ```bash
-    python db.py
-    ```
-    This will create `trade.db`.
-
-3.  **Run the Server**:
-    ```bash
-    python app.py
-    ```
-    The server will start at `http://localhost:5000`.
-
-4.  **Run the Cron Job** (Background Task):
-    Open a new terminal and run:
-    ```bash
-    python cron.py
-    ```
-    This script handles the result calculation and payouts at the end of each session.
-
-## Structure
-
-- `app.py`: Main Flask application containing all API endpoints and page routes.
-- `db.py`: Database connection and schema initialization.
-- `cron.py`: Background script to process rewards and enforce "House Wins" logic if no admin result is set.
-- `templates/`: HTML templates for the frontend pages (Home, Admin, etc.).
-- `static/`: Static files (CSS, JS, Images).
-
-## Features Ported
-
-- **Auth**: Session-based authentication.
-- **Betting**: Real-time betting API with balance checks and time locking.
-- **Admin**: Admin panel to set results manually and toggle Auto mode.
-- **Logic**:
-    - **Sync IDs**: History and API results are filtered to show only completed sessions.
-    - **No Random**: Auto mode uses "House Wins" logic, not random.
-    - **Admin Priority**: Admin-set results are respected 100%.
+1.  Ensure your web server (Apache/Nginx) points to this directory.
+2.  The database `trade.db` (SQLite) will be automatically created.
