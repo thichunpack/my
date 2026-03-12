@@ -268,7 +268,7 @@ async function askTrade(type){
     });
     const data = await res.json();
     if(data.st=='ok'){
-        Swal.fire('Thành công', 'Đặt cược thành công!', 'success').then(()=>location.reload());
+        Swal.fire('Thành công', 'Đặt cược thành công! Khi thắng hệ thống sẽ báo THẮNG CƯỢC tự động.', 'success').then(()=>location.reload());
     } else {
         Swal.fire('Lỗi', data.msg, 'error');
     }
@@ -457,7 +457,7 @@ th,td{padding:8px;border-bottom:1px solid #eee;text-align:left;}
             <button type="submit" name="set_result" class="btn btn-blue">SET</button>
         </form>
 
-        <h4 style="margin-top:15px">Điều chỉnh nhanh nhiều phiên</h4>
+        <h4 style="margin-top:15px">Điều chỉnh soi cầu nhiều phiên (quá khứ + tương lai)</h4>
         <div style="max-height:260px;overflow-y:auto;">
         <table>
             <tr><th>Phiên</th><th>KQ hiện tại</th><th>Đổi KQ</th><th>Lưu</th></tr>
@@ -958,12 +958,12 @@ def admin():
     # Fetch Other Data
     users_list = conn.execute('SELECT * FROM users ORDER BY id DESC').fetchall()
     pending_trans = conn.execute('SELECT t.*, u.username FROM transactions t JOIN users u ON t.user_id = u.id WHERE t.status=\'pending\' ORDER BY t.id DESC').fetchall()
-    recent_results = conn.execute('SELECT * FROM results ORDER BY session_id DESC LIMIT 10').fetchall()
-    future_sids = [current_sid + i for i in range(0, 21)]
-    future_rows = conn.execute('SELECT session_id, result FROM results WHERE session_id >= ? AND session_id <= ? ORDER BY session_id ASC', (current_sid, current_sid + 20)).fetchall()
+    recent_results = conn.execute('SELECT * FROM results ORDER BY session_id DESC LIMIT 200').fetchall()
+    future_sids = [sid for sid in range(current_sid - 30, current_sid + 61)]
+    future_rows = conn.execute('SELECT session_id, result FROM results WHERE session_id >= ? AND session_id <= ? ORDER BY session_id ASC', (current_sid - 30, current_sid + 60)).fetchall()
     future_results = {row['session_id']: row['result'] for row in future_rows}
-    bet_history = conn.execute('SELECT b.*, u.username FROM bets b JOIN users u ON b.user_id = u.id ORDER BY b.id DESC LIMIT 100').fetchall()
-    recent_trans = conn.execute('SELECT t.*, u.username FROM transactions t JOIN users u ON t.user_id = u.id ORDER BY t.id DESC LIMIT 100').fetchall()
+    bet_history = conn.execute('SELECT b.*, u.username FROM bets b JOIN users u ON b.user_id = u.id ORDER BY b.id DESC LIMIT 1000').fetchall()
+    recent_trans = conn.execute('SELECT t.*, u.username FROM transactions t JOIN users u ON t.user_id = u.id ORDER BY t.id DESC LIMIT 1000').fetchall()
     
     try:
         auto_active = conn.execute('SELECT active FROM auto_results').fetchone()['active']
