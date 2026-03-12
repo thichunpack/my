@@ -36,18 +36,23 @@ def process_rewards():
 
         # 3. Payout
         for bet in bets:
-            is_win = False
-            if final_res == 'up' and 'TĂNG' in bet['bet_type']: is_win = True
-            elif final_res == 'down' and 'GIẢM' in bet['bet_type']: is_win = True
-            # Handle exact string match too
-            elif bet['bet_type'] == final_res: is_win = True
-            
+            is_win = (bet['bet_type'] == final_res)
+
             if is_win:
                 profit = bet['amount'] * 0.9
-                conn.execute("UPDATE users SET balance = balance + ? WHERE id = ?", (bet['amount'] + profit, bet['user_id']))
+                payout = bet['amount'] + profit
+                conn.execute("UPDATE users SET balance = balance + ? WHERE id = ?", (payout, bet['user_id']))
                 conn.execute("UPDATE bets SET status = 'win', profit = ? WHERE id = ?", (profit, bet['id']))
+                conn.execute(
+                    "INSERT INTO transactions (user_id, type, amount, info, status) VALUES (?, 'reward', ?, ?, 'completed')",
+                    (bet['user_id'], payout, f"Trả thưởng phiên {last_sid} | Cược {bet['bet_type']} | KQ {final_res} | Lãi {profit}")
+                )
             else:
                 conn.execute("UPDATE bets SET status = 'loss', profit = ? WHERE id = ?", (-bet['amount'], bet['id']))
+                conn.execute(
+                    "INSERT INTO transactions (user_id, type, amount, info, status) VALUES (?, 'bet_settle', ?, ?, 'completed')",
+                    (bet['user_id'], -bet['amount'], f"Chốt phiên {last_sid} | Cược {bet['bet_type']} | KQ {final_res} | Không trúng")
+                )
                 
         conn.commit()
         print(f"Processed rewards for session {last_sid}")
